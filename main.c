@@ -1,30 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.h                                    :+:      :+:    :+:   */
+/*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ivotints <ivotints@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/01 21:49:46 by ivotints          #+#    #+#             */
-/*   Updated: 2024/11/02 00:31:44 by ivotints         ###   ########.fr       */
+/*   Created: 2024/11/01 23:55:16 by ivotints          #+#    #+#             */
+/*   Updated: 2024/11/01 23:55:38 by ivotints         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GET_NEXT_LINE_H
-# define GET_NEXT_LINE_H
+#include "get_next_line.h"
 
-# include <stdlib.h>
-# include <unistd.h>
-# include <stdio.h>
-# include <fcntl.h>
+int	main(int ac, char **av)
+{
+	int		fd;
+	char	*line;
+	int		i;
 
-# ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 5
-# endif
-
-char	*get_next_line(int fd);
-char	*ft_strchr(char *str, int c);
-int		ft_strlen(char *str);
-char	*ft_strjoin(char *buffer, char *line);
-
-#endif
+	if (ac == 2)
+	{
+		fd = open(av[1], O_RDONLY);
+		line = get_next_line(fd);
+		i = 1;
+		while (line && i <= 10)
+		{
+			printf("%d: %s", i++, line);
+			free(line);
+			line = get_next_line(fd);
+		}
+	}
+}
